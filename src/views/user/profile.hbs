@@ -1,0 +1,91 @@
+<div style="margin-top: 160px">
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                            <h5 class="my-3">{{user.name}}</h5>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <form method="POST" id="edit-profile-forms">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Full Name</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input name="name" type="text" class="form-control" id="exampleInputEmail1"
+                                            value="{{user.name}}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Email</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input name="email" type="text" class="form-control" id="exampleInputEmail1"
+                                            value="{{user.email}}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Phone</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input name="phone" type="text" class="form-control" id="exampleInputEmail1"
+                                            value="{{user.phone}}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Wallet</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">A$ {{user.wallet}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-edit"
+                        style="float: right; background-color: #000; color: #fff"
+                        data-slug="{{user.slug}}">Edit</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- JavaScript Libraries -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var btnEdit = $('.btn-edit');
+        var editForm = document.forms['edit-profile-forms'];
+        var userSlug;
+        var isSubmit = true;
+        btnEdit.on('click', function () {
+            userSlug = btnEdit.data('slug');
+            $("input[type='text']").each(function () {
+                if ($(this).val().trim() === "") {
+                    alert('Vui Lòng Nhập Đầy Đủ Dữ Liệu');
+                    isSubmit = false;
+                    return false;
+                }
+            })
+            if (isSubmit) {
+                editForm.action = `/user/profile/edit-submit/` + userSlug + "?_method=PUT";
+                editForm.submit();
+            }
+        })
+    })
+</script>

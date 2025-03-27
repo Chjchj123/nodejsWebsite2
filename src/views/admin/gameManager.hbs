@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<head>
+    <title>ADMIN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script
+        type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- bootstrap-css -->
+    <link rel="stylesheet" href="dashboard/css/bootstrap.min.css">
+    <!-- //bootstrap-css -->
+    <!-- Custom CSS -->
+    <link href="dashboard/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="dashboard/css/style-responsive.css" rel="stylesheet" />
+    <!-- font CSS -->
+    <link
+        href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
+    <!-- font-awesome icons -->
+    <link rel="stylesheet" href="dashboard/css/font.css" type="text/css" />
+    <link href="dashboard/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard/css/morris.css" type="text/css" />
+    <!-- calendar -->
+    <link rel="stylesheet" href="dashboard/css/monthly.css">
+    <!-- //calendar -->
+    <!-- //font-awesome icons -->
+    <script src="dashboard/js/jquery2.0.3.min.js"></script>
+    <script src="dashboard/js/raphael-min.js"></script>
+    <script src="dashboard/js/morris.js"></script>
+</head>
+
+<body>
+    <form method="POST" id="delete-submit-forms"></form>
+    <section id="container">
+        <!--header start-->
+        <header class="header fixed-top clearfix">
+            <!--logo start-->
+            <div class="brand">
+                <a href="/admin" class="logo">
+                    VISITORS
+                </a>
+                <div class="sidebar-toggle-box">
+                    <div class="fa fa-bars"></div>
+                </div>
+            </div>
+            <!--logo end-->
+
+
+        </header>
+        <!--header end-->
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse">
+                <!-- sidebar menu start-->
+                <div class="leftside-navigation">
+                    <ul class="sidebar-menu" id="nav-accordion">
+                        <li>
+                            <a class="active" href="/admin">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="active" href="/admin/create">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Create A New Game</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="active" href="/admin/show-all">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Games</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="active" href="/admin/delete-game">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Recycle Bin</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper">
+                <!-- //market-->
+                <div class="market-updates">
+                    <table class="table table-admin">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Create At</th>
+                                <th scope="col" colspan="3">Updated At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each GameData}}
+                            <tr>
+                                <th scope="row">{{sum @index 1}}</th>
+                                <td>{{this.name}}</td>
+                                <td>{{this.price}}</td>
+                                <td>{{this.description}}</td>
+                                <td>{{this.createdAt}}</td>
+                                <td>{{this.updatedAt}}</td>
+                                <td><a style="color: #000;" href="/admin/edit-Games/{{this.slug}}" class="btn-edit"
+                                        data-slug="{{this.slug}}">Edit</a></td>
+                                <td><a style="color: #000;" href="" class="delete" data-toggle="modal"
+                                        data-slug="{{this.slug}}" data-target="#delete-modal">Delete</a></td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td colspan="6" class="text-center">You Aren't Upload Any Games </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <div class="clearfix"> </div>
+                </div>
+
+            </section>
+        </section>
+        <!--main content end-->
+    </section>
+    <script src="dashboard/js/bootstrap.js"></script>
+    <script src="dashboard/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="dashboard/js/scripts.js"></script>
+    <script src="dashboard/js/jquery.slimscroll.js"></script>
+    <script src="dashboard/js/jquery.nicescroll.js"></script>
+    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+    <script src="dashboard/js/jquery.scrollTo.js"></script>
+    <!-- morris JavaScript -->
+</body>
+<!-- Modal -->
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn Có Chắc Là Muốn Xóa Dữ Liệu Này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger btn-delete">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var deleteForm = document.forms['delete-submit-forms'];
+        var gameSlug;
+        var btnDelete = $('.btn-delete');
+        $("#delete-modal").on('show.bs.modal', function (ev) {
+            var button = $(ev.relatedTarget);
+            gameSlug = button.data('slug');
+        });
+
+
+        btnDelete.on('click', function () {
+            deleteForm.action = `/admin/delete-submit/` + gameSlug + '?_method=DELETE';
+            deleteForm.submit();
+        })
+    })
+</script>

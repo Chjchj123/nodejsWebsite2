@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<head>
+    <title>ADMIN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script
+        type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- bootstrap-css -->
+    <link rel="stylesheet" href="dashboard/css/bootstrap.min.css">
+    <!-- //bootstrap-css -->
+    <!-- Custom CSS -->
+    <link href="dashboard/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="dashboard/css/style-responsive.css" rel="stylesheet" />
+    <!-- font CSS -->
+    <link
+        href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
+    <!-- font-awesome icons -->
+    <link rel="stylesheet" href="dashboard/css/font.css" type="text/css" />
+    <link href="dashboard/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard/css/morris.css" type="text/css" />
+    <!-- calendar -->
+    <link rel="stylesheet" href="dashboard/css/monthly.css">
+    <!-- //calendar -->
+    <!-- //font-awesome icons -->
+    <script src="dashboard/js/jquery2.0.3.min.js"></script>
+    <script src="dashboard/js/raphael-min.js"></script>
+    <script src="dashboard/js/morris.js"></script>
+</head>
+
+<body>
+    <form method="POST" id="restore-forms"></form>
+    <form method="POST" id="delete-forms"></form>
+    <form method="POST" id="container-forms" action="/admin/submit-forms-container">
+
+        <section id="container">
+            <!--header start-->
+            <header class="header fixed-top clearfix">
+                <!--logo start-->
+                <div class="brand">
+                    <a href="/admin" class="logo">
+                        VISITORS
+                    </a>
+                    <div class="sidebar-toggle-box">
+                        <div class="fa fa-bars"></div>
+                    </div>
+                </div>
+                <!--logo end-->
+
+
+            </header>
+            <!--header end-->
+            <!--sidebar start-->
+            <aside>
+                <div id="sidebar" class="nav-collapse">
+                    <!-- sidebar menu start-->
+                    <div class="leftside-navigation">
+                        <ul class="sidebar-menu" id="nav-accordion">
+                            <li>
+                                <a class="active" href="/admin">
+                                    <i class="fa fa-dashboard"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="active" href="/admin/create">
+                                    <i class="fa fa-dashboard"></i>
+                                    <span>Create A New Game</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="active" href="/admin/show-all">
+                                    <i class="fa fa-dashboard"></i>
+                                    <span>Games</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="active" href="/admin/delete-game">
+                                    <i class="fa fa-dashboard"></i>
+                                    <span>Recycle Bin</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- sidebar menu end-->
+                </div>
+            </aside>
+            <!--sidebar end-->
+            <!--main content start-->
+            <section id="main-content">
+                <section class="wrapper">
+                    <!-- //market-->
+                    <div class="market-updates">
+                        <div class="mt-4" style="display: flex; align-items: center;">
+                            <div class="form-group form-check" style="margin: 0px 8px 0px 0px;">
+                                <input type="checkbox" class="form-check-input" id="checkbox-all">
+                                <label class="form-check-label" for="checkbox-all">Select All</label>
+                            </div>
+                            <select class="form-control form-control-sm checkbox-select-all-options" name="action"
+                                required="required" style="width: 50%; padding: 8px;">
+                                <option value="">-- Action --</option>
+                                <option value="restore">Restore All Selection</option>
+                                <option value="delete">Delete All Selection</option>
+                            </select>
+                            <button type="button" class="btn btn-primary btn-sm btn-check-all-submit" disabled
+                                style="margin-right: 8px;">Apply</button>
+                        </div>
+                        <table class="table table-admin">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Create At</th>
+                                    <th scope="col" colspan="3">Updated At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each gameData}}
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-check-inline">
+                                            <input class="check-box-item" type="checkbox" id="check-box-item"
+                                                value="{{this.slug}}" name="gameSlug[]">
+                                        </div>
+                                    </td>
+                                    <th scope="row">{{sum @index 1}}</th>
+                                    <td>{{this.name}}</td>
+                                    <td>{{this.price}}</td>
+                                    <td>{{this.description}}</td>
+                                    <td>{{this.createdAt}}</td>
+                                    <td>{{this.updatedAt}}</td>
+                                    <td><a style="color: #000;" href="" class="btn-restore"
+                                            data-slug="{{this.slug}}">Restore</a></td>
+                                    <td><a style="color: #000;" href="" class="delete" data-toggle="modal"
+                                            data-slug="{{this.slug}}" data-target="#delete-modal">Delete</a></td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="6" class="text-center">You Aren't Have Any Games Be Deleted </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <div class="clearfix"> </div>
+                    </div>
+
+                </section>
+            </section>
+            <!--main content end-->
+        </section>
+        <!-- Modal Submit All -->
+        <div class="modal fade" id="hard-all-submit-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Are You Sure To Make This Decision?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are You Sure?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger btn-all-submit">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Submit Delete SingleOne -->
+        <div class="modal fade" id="delete-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Are You Sure To Make This Decision?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are You Sure?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger btn-delete-submit">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="dashboard/js/bootstrap.js"></script>
+    <script src="dashboard/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="dashboard/js/scripts.js"></script>
+    <script src="dashboard/js/jquery.slimscroll.js"></script>
+    <script src="dashboard/js/jquery.nicescroll.js"></script>
+    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+    <script src="dashboard/js/jquery.scrollTo.js"></script>
+    <!-- morris JavaScript -->
+</body>
+
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var restoreForm = document.forms['restore-forms'];
+        var restoreBtn = $('.btn-restore');
+        var gameSlug;
+        var checkBoxAll = $('#checkbox-all');
+        var checkBox = $('.check-box-item');
+        var checkBoxAllSubmit = $('.btn-check-all-submit');
+        var containerForms = document.forms['container-forms'];
+        var btnDeleteSubmit = $('.btn-delete-submit');
+        var deleteForms = document.forms['delete-forms'];
+
+        $('#hard-all-submit-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            gameSlug = button.data('slug');
+        });
+
+        // check box logic
+        checkBoxAll.change(function () {
+            var isCheckAll = $(this).prop('checked');
+            checkBox.prop('checked', isCheckAll);
+            renderCheckBoxSubmit();
+        })
+
+        checkBox.change(function () {
+            var isChecked = checkBox.length === $('input[name="gameSlug[]"]:checked').length;
+            checkBoxAll.prop('checked', isChecked);
+            renderCheckBoxSubmit();
+        })
+
+        function renderCheckBoxSubmit() {
+            var isChecked = $('input[name="gameSlug[]"]:checked').length;
+            if (isChecked > 0) {
+                checkBoxAllSubmit.attr('disabled', false);
+                checkBoxAllSubmit.attr('data-toggle', 'modal');
+                checkBoxAllSubmit.attr('data-target', '#hard-all-submit-modal');
+            } else {
+                checkBoxAllSubmit.attr('disabled', true);
+                checkBoxAllSubmit.remove('data-toggle');
+                checkBoxAllSubmit.remove('data-target');
+            }
+        }
+
+        //end checkbox logic 
+        restoreBtn.on('click', function (ev) {
+            ev.preventDefault();
+            gameSlug = $(this).data('slug');
+            restoreForm.action = `/admin/restore/` + gameSlug + '?_method=PATCH';
+            restoreForm.submit();
+        })
+
+        btnDeleteSubmit.on('click', function (e) {
+            e.preventDefault();
+            gameSlug = $('.delete').data('slug');
+            deleteForms.action = `/admin/hard-delete/` + gameSlug + '?_method=DELETE';
+            deleteForms.submit();
+        })
+
+        containerForms.on('submit', function (e) {
+            var isSubmitable = checkBoxAll.hasClass('disabled');
+            if (isSubmitable) {
+                e.preventDefault();
+            }
+        })
+
+    })
+</script>

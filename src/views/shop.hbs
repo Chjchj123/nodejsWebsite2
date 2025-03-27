@@ -1,0 +1,128 @@
+<div class="container-fluid fruite py-5" style="margin-top: 100px">
+    <div class="container py-5">
+        <h1 class="mb-4">All Games</h1>
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="row g-4 mt-4">
+                    <div class="col-lg-3">
+                        <div class="row g-4">
+
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4 class="mb-2">Price</h4>
+                                    <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput"
+                                        min="0" max="150" value="0" oninput="amount.value=rangeInput.value">
+                                    <output id="amount" name="amount" min-velue="0" max-value="150"
+                                        for="rangeInput">0</output>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12">
+                                <div class="position-relative">
+                                    <img src="img/vertical-banner-steam.png" class="img-fluid w-100 rounded" alt="">
+                                    <div class="position-absolute"
+                                        style="top: 50%; right: 10px; transform: translateY(-50%);">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="row g-4 justify-content-center" id="gameList">
+                            {{#each games}}
+                            <div class="col-md-6 col-lg-6 col-xl-4">
+                                <div class="rounded position-relative fruite-item">
+                                    <div class="fruite-img">
+                                        <img src="img/{{this.image}}" class="img-fluid w-100 rounded-top" alt="">
+                                    </div>
+                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                        style="top: 10px; left: 10px;">Steam</div>
+                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                        <h4 class="text-limit-2"><a href="/games/{{this.slug}}"
+                                                style="font-size: 32px;">{{this.name}}</a></h4>
+                                        <p class="text-limit">{{this.description}}</p>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                            <p class="text-dark fs-5 fw-bold mb-0">A$ {{this.price}}</p>
+                                            <form method="POST" action="/user/cart-add/{{this._id}}" id="form-cart-add">
+                                                <button data-id="{{this.id}}" type="submit"
+                                                    class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to
+                                                    cart</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                            <div class="pagination d-flex justify-content-center mt-5 col-12">
+                                {{#if hasPrevPage}}
+                                <a href="?page={{prevPage}}" class="rounded">&laquo;</a>
+                                {{/if}}
+
+                                {{#each pages}}
+                                {{#if this.isCurrent}}
+                                <a href="?page={{this.number}}" class="active rounded">{{this.number}}</a>
+                                {{else}}
+                                <a href="?page={{this.number}}" class="rounded">{{this.number}}</a>
+                                {{/if}}
+                                {{/each}}
+
+                                {{#if hasNextPage}}
+                                <a href="?page={{nextPage}}" class="rounded">&raquo;</a>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fruits Shop End-->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $("#rangeInput").on("input", function () {
+                let price = $(this).val();
+                $("#amount").text(price);
+
+                $.ajax({
+                    url: "/shop-page/filter-price",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ price: price }),
+                    success: function (games) {
+                        $("#gameList").empty();
+                        games.forEach(game => {
+                            $("#gameList").append(`
+                        <div class="col-md-6 col-lg-6 col-xl-4">
+                            <div class="rounded position-relative fruite-item">
+                                <div class="fruite-img">
+                                    <img src="img/${game.image}" class="img-fluid w-100 rounded-top" alt="">
+                                </div>
+                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                    style="top: 10px; left: 10px;">Steam</div>
+                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                    <h4 class="text-limit-2"><a href="/games/${game.slug}" style="font-size: 32px;">${game.name}</a></h4>
+                                    <p class="text-limit">${game.description}</p>
+                                    <div class="d-flex justify-content-between flex-lg-wrap">
+                                        <p class="text-dark fs-5 fw-bold mb-0">A$ ${game.price}</p>
+                                        <form method="POST" action="/user/cart-add/${game._id}">
+                                            <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", error);
+                    }
+                });
+            });
+        })
+    </script>
