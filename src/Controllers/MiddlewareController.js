@@ -13,8 +13,7 @@ class MiddlewareController {
                 next();
             });
         } else {
-            res.json(req.cookies.accessToken);
-            // return res.redirect('/auth/login');
+            return res.redirect('/auth/login');
         }
     }
 
