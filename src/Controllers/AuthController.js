@@ -34,12 +34,18 @@ class AuthController {
     async loginSubmit(req, res, next) {
         try {
             const userNameCheck = await User.findOne({ username: req.body.username }).lean();
+
+            if (!userNameCheck) {
+                return res.status(400).json('Wrong USERNAME');
+            }
+
             const validPassword = bcrypt.compare(
                 req.body.password,
                 userNameCheck.password,
             );
-            if (!userNameCheck || !validPassword) {
-                res.status(400).json('WRONG PASSWORD OR USERNAME');
+
+            if (!validPassword) {
+                return res.status(400).json('WRONG PASSWORD');
             } else {
                 const accessToken = jwt.sign({
                     id: userNameCheck._id,
@@ -50,7 +56,7 @@ class AuthController {
                 refreshTokensArr.push(accessToken);
                 res.cookie("accessToken", accessToken, {
                     httpOnly: true,
-                    secure: "true",
+                    secure: process.env.NODE_ENV === "production",
                     sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
                     path: "/",
                 });
