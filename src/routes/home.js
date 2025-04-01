@@ -26,7 +26,7 @@ router.delete('/admin/delete-submit/:slug', MiddlewareController.verifyToken, Mi
 router.patch('/admin/restore/:slug', MiddlewareController.verifyToken, MiddlewareController.verifyAdmin, homeController.restoreGames);
 router.delete('/admin/hard-delete/:slug', MiddlewareController.verifyToken, MiddlewareController.verifyAdmin, homeController.hardDelete);
 router.post('/admin/submit-forms-container', MiddlewareController.verifyToken, MiddlewareController.verifyAdmin, homeController.submitFormHandler);
-router.get('/contact', MiddlewareController.verifyToken, homeController.contactSite);
+router.get('/add-fund', MiddlewareController.verifyToken, homeController.addFund);
 router.get('/', MiddlewareController.verifyToken, homeController.show);
 
 module.exports = router;

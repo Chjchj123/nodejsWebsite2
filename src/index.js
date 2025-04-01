@@ -11,7 +11,9 @@ const cookieParser = require('cookie-parser');
 const flash = require("connect-flash");
 const handlebarsHelpers = require("handlebars-helpers")();
 const Games = require('./Models/product');
-const errorController = require('./Controllers/HomeController')
+const errorController = require('./Controllers/HomeController');
+const userController = require('./Controllers/UserController');
+
 
 const cors = require('cors');
 app.use(cors());
@@ -56,8 +58,11 @@ app.use(async (req, res, next) => {
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
+
+
 router(app);
 db.connect();
+
 app.use(errorController.get404);
 app.listen(port, '0.0.0.0', () => {
     console.log('Connect Successfull in localhost');

@@ -2,6 +2,18 @@ const jwt = require('jsonwebtoken');
 const User = require('../Models/user');
 const Games = require('../Models/product');
 const bcrypt = require('bcryptjs');
+const Imap = require("imap-simple");
+const axios = require("axios");
+const config = {
+    imap: {
+        user: "quanganh2004dasuo@gmail.com",
+        password: 'zemb hdog gsgx etmt',
+        host: "imap.gmail.com",
+        port: 993,
+        tls: true,
+        tlsOptions: { rejectUnauthorized: false },
+    },
+};
 
 class UserController {
     async profile(req, res, next) {
@@ -145,6 +157,7 @@ class UserController {
             next(error);
         }
     }
+
 }
 
 module.exports = new UserController;

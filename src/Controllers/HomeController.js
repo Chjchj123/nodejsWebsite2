@@ -215,7 +215,7 @@ class HomeController {
         res.status(404).render("404");
     };
 
-    async contactSite(req, res, next) {
+    async addFund(req, res, next) {
         try {
             const token = req.cookies.accessToken;
             var userId;
