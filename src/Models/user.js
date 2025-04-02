@@ -9,7 +9,7 @@ const User = new Schema({
     slug: { type: String, slug: 'username' },
     cart: { type: [String], default: [] },
     isAdmin: { type: Boolean, default: false },
-    wallet: { type: Number, default: 0 },
+    wallet: { type: Number, default: 0, get: v => parseFloat(v.toFixed(2)) },
     email: { type: String, default: "Example@email.com" },
     phone: { type: String, default: "0123456789" },
 }, {

@@ -11,6 +11,7 @@ router.put('/change-password-submit/:_id', MiddlewareController.verifyToken, use
 router.post('/cart-add/:_id', MiddlewareController.verifyToken, userController.addToCart);
 router.get('/cart/:_id', MiddlewareController.verifyToken, userController.showCart);
 router.post('/remove-cart/:_id', MiddlewareController.verifyToken, userController.removeFromCart);
+router.post('/checkout', MiddlewareController.verifyToken, userController.checkOut);
 
 
 module.exports = router;

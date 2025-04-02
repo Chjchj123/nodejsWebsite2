@@ -2,18 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../Models/user');
 const Games = require('../Models/product');
 const bcrypt = require('bcryptjs');
-const Imap = require("imap-simple");
-const axios = require("axios");
-const config = {
-    imap: {
-        user: "quanganh2004dasuo@gmail.com",
-        password: 'zemb hdog gsgx etmt',
-        host: "imap.gmail.com",
-        port: 993,
-        tls: true,
-        tlsOptions: { rejectUnauthorized: false },
-    },
-};
+
 
 class UserController {
     async profile(req, res, next) {
@@ -153,6 +142,28 @@ class UserController {
             user.cart = user.cart.filter(item => item !== req.params._id);
             user.save();
             return res.redirect('/user/cart/' + userId);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    // [POST]
+    async checkOut(req, res, next) {
+        try {
+            const token = req.cookies.accessToken;
+            var userId;
+            jwt.verify(token, process.env.ACCESSTOKEN, (error, user) => {
+                if (error) {
+                    return res.redirect('/auth/login');
+                }
+                userId = user.id;
+            });
+            const user = await User.findOne({ _id: userId });
+            var totalPrice = parseFloat(req.body.totalPrice);
+            user.wallet -= totalPrice;
+            user.wallet.toFixed(2);
+            user.save();
+            return res.redirect('/')
         } catch (error) {
             next(error);
         }

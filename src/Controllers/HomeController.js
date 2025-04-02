@@ -47,6 +47,7 @@ class HomeController {
             const user = await User.findOne({ _id: userId });
             const amount = req.body.money;
             user.wallet += amount;
+            user.wallet.toFixed(2);
             user.save();
             return res.redirect('/user/profile/' + user.slug);
         } catch (error) {
