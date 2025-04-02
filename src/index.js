@@ -16,7 +16,7 @@ const userController = require('./Controllers/UserController');
 const { exec } = require("child_process");
 
 exec(
-    'git add . && git commit -m "Update uploaded files" && git push origin main',
+    'git add . && git commit -m "Update uploaded files" && git push origin',
     (err, stdout, stderr) => {
         if (err) {
             console.error(`Lỗi: ${err.message}`);
