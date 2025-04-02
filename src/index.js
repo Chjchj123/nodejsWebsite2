@@ -13,7 +13,18 @@ const handlebarsHelpers = require("handlebars-helpers")();
 const Games = require('./Models/product');
 const errorController = require('./Controllers/HomeController');
 const userController = require('./Controllers/UserController');
+const { exec } = require("child_process");
 
+exec(
+    'git add . && git commit -m "Update uploaded files" && git push origin main',
+    (err, stdout, stderr) => {
+        if (err) {
+            console.error(`Lỗi: ${err.message}`);
+            return;
+        }
+        console.log(stdout || stderr);
+    }
+);
 
 const cors = require('cors');
 app.use(cors());
