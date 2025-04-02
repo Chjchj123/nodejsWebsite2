@@ -2,6 +2,7 @@ const Games = require('../Models/product');
 const User = require('../Models/user');
 const jwt = require('jsonwebtoken');
 const fs = require('fs').promises;
+const { exec } = require("child_process");
 
 class HomeController {
     async show(req, res, next) {
@@ -153,6 +154,16 @@ class HomeController {
                     break;
             }
             await Games.updateOne({ slug: req.params.slug }, data);
+            exec(
+                'git add . && git commit -m "Update uploaded files" && git push origin',
+                (err, stdout, stderr) => {
+                    if (err) {
+                        console.error(`Lỗi: ${err.message}`);
+                        return;
+                    }
+                    console.log(stdout || stderr);
+                }
+            );
             return res.redirect('/admin/show-all');
         } catch (error) {
             next(error);
