@@ -87,6 +87,16 @@ class HomeController {
                 }
             });
             game.save();
+            exec(
+                'git add . && git commit -m "Update uploaded files" && git push origin',
+                (err, stdout, stderr) => {
+                    if (err) {
+                        console.error(`Lỗi: ${err.message}`);
+                        return;
+                    }
+                    console.log(stdout || stderr);
+                }
+            );
             res.redirect('/');
         } catch (error) {
             next(error);
