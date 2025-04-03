@@ -128,7 +128,7 @@ class HomeController {
         try {
             const GameData = await Games.findOne({ slug: req.params.slug }).lean();
             const data = req.body;
-            if (data.image != null) {
+            if (data.image !== null) {
                 await fs.unlink(`src/public/img/` + GameData.image);
                 data.image = req.file.filename;
             }
