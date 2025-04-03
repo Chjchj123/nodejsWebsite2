@@ -33,13 +33,13 @@ class AuthController {
 
     async loginSubmit(req, res, next) {
         try {
-            const userNameCheck = await User.findOne({ username: req.body.username }).lean();
+            const userNameCheck = await User.findOne({ username: req.body.username });
 
             if (!userNameCheck) {
                 return res.status(400).json('Wrong USERNAME');
             }
 
-            const validPassword = bcrypt.compare(
+            const validPassword = await bcrypt.compare(
                 req.body.password,
                 userNameCheck.password,
             );
